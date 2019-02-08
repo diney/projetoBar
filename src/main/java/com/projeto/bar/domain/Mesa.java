@@ -8,50 +8,76 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
-public class Categoria implements Serializable {
+public class Mesa  implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	@ManyToMany(mappedBy="categorias")
-	private List<Produto> produtos = new ArrayList<>();
-
-	public Categoria() {
+	private Integer numero;
+	private Integer numeroPessoa;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="mesa")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	
+	public Mesa() {
+		
 	}
 
-	public Categoria(Integer id, String nome) {
+
+	public Mesa(Integer id, Integer numero, Integer numeroPessoa) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.numero = numero;
+		this.numeroPessoa = numeroPessoa;
 	}
+
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+
+	public Integer getNumero() {
+		return numero;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public Integer getNumeroPessoa() {
+		return numeroPessoa;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+
+	public void setNumeroPessoa(Integer numeroPessoa) {
+		this.numeroPessoa = numeroPessoa;
 	}
+
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -61,6 +87,7 @@ public class Categoria implements Serializable {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -69,7 +96,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Mesa other = (Mesa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -77,5 +104,12 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
+	
+	
+	
+	
+	
 
 }
