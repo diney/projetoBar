@@ -16,6 +16,7 @@ import com.projeto.bar.domain.Pedido;
 import com.projeto.bar.domain.Produto;
 import com.projeto.bar.enums.EstadoPagamento;
 import com.projeto.bar.repositories.CategoriaRepository;
+import com.projeto.bar.repositories.ItemPedidoRepository;
 import com.projeto.bar.repositories.MesaRepository;
 import com.projeto.bar.repositories.PagamentoRepository;
 import com.projeto.bar.repositories.PedidoRepository;
@@ -36,6 +37,9 @@ public class ProjetoBarApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 
@@ -76,8 +80,12 @@ public class ProjetoBarApplication implements CommandLineRunner {
 		pedidoRepository.save(ped1);
 		pagamentoRepository.save(pag);
 		
-		//ItemPedido ip1 = new  ItemPedido()
+		ItemPedido ip1 = new  ItemPedido(ped1,p1,0.0,1, 2000.00);
 		
+		
+		ped1.getItens().add(ip1);
+		p1.getItens().add(ip1);
+		itemPedidoRepository.save(ip1);
 		
 		
 	}
