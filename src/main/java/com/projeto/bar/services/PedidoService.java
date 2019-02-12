@@ -5,22 +5,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.projeto.bar.domain.Mesa;
-import com.projeto.bar.repositories.MesaRepository;
+import com.projeto.bar.domain.Pedido;
+import com.projeto.bar.repositories.PedidoRepository;
 import com.projeto.bar.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class MesaService {
+public class PedidoService {
 
 	@Autowired
-	private MesaRepository repo;
+	private PedidoRepository repo;
 
+	
 
-
-	public Mesa find(Integer id) {
-		Optional<Mesa> obj = repo.findById(id);
+	public Pedido find(Integer id) {
+		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Mesa.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
 }

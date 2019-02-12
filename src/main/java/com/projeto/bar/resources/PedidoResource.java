@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto.bar.domain.Mesa;
-import com.projeto.bar.services.MesaService;
+import com.projeto.bar.domain.Pedido;
+import com.projeto.bar.services.PedidoService;
 
 @RestController
-@RequestMapping(value="/mesas")
-public class MesaResource {
+@RequestMapping(value="/pedidos")
+public class PedidoResource {
 	
 	@Autowired
-	private MesaService service;
+	private PedidoService service;
 	
 	@RequestMapping(value ="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Mesa> find(@PathVariable Integer id) {		
-		Mesa obj = service.find(id);
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {		
+		Pedido obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 

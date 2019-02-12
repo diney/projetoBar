@@ -62,13 +62,14 @@ public class ProjetoBarApplication implements CommandLineRunner {
        
 		
 		
-		cat3.getProdutos().addAll(Arrays.asList(p1));
+		cat3.getProdutos().addAll((Arrays.asList(p1)));
+		p1.getCategorias().addAll(Arrays.asList(cat3));
 		
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3)); 
 		produtoRepository.save(p1);
 		
-		Pedido ped1 = new Pedido(null,sdf.parse("08/02/2019 14:39"),mesa);
+		Pedido ped1 = new Pedido(null,sdf.parse("08/02/2018 14:39"),mesa);
 		
 		Pagamento pag = new Pagamento(null, EstadoPagamento.PAGO, ped1);
 		
