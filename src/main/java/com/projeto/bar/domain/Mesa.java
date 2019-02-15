@@ -2,6 +2,7 @@ package com.projeto.bar.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Mesa  implements Serializable{
@@ -19,7 +21,8 @@ public class Mesa  implements Serializable{
 	private Integer id;
 	private Integer numero;
 	private Integer numeroPessoa;
-	
+	@JsonFormat(pattern="dd/MM/yyyy HH:MM")
+	private Date instante ;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="mesa")
@@ -31,11 +34,12 @@ public class Mesa  implements Serializable{
 	}
 
 
-	public Mesa(Integer id, Integer numero, Integer numeroPessoa) {
+	public Mesa(Integer id, Integer numero, Integer numeroPessoa,Date instante) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.numeroPessoa = numeroPessoa;
+		this.instante = instante;
 	}
 
 
@@ -76,6 +80,16 @@ public class Mesa  implements Serializable{
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+
+	public Date getInstante() {
+		return instante;
+	}
+
+
+	public void setInstante(Date instante) {
+		this.instante = instante;
 	}
 
 

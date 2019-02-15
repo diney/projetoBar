@@ -11,14 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.projeto.bar.domain.Categoria;
 import com.projeto.bar.domain.ItemPedido;
 import com.projeto.bar.domain.Mesa;
-import com.projeto.bar.domain.Pagamento;
 import com.projeto.bar.domain.Pedido;
 import com.projeto.bar.domain.Produto;
-import com.projeto.bar.enums.EstadoPagamento;
 import com.projeto.bar.repositories.CategoriaRepository;
 import com.projeto.bar.repositories.ItemPedidoRepository;
 import com.projeto.bar.repositories.MesaRepository;
-import com.projeto.bar.repositories.PagamentoRepository;
 import com.projeto.bar.repositories.PedidoRepository;
 import com.projeto.bar.repositories.ProdutoRepository;
 
@@ -35,8 +32,6 @@ public class ProjetoBarApplication implements CommandLineRunner {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
-	@Autowired
-	private PagamentoRepository pagamentoRepository;
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
@@ -50,43 +45,49 @@ public class ProjetoBarApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:MM");
+		SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Categoria cat1 = new Categoria(null,"Pratos");
 		Categoria cat2 = new Categoria(null,"Aperitivos");		
 		Categoria cat3 = new Categoria(null,"Bebidas");
 		
 		Produto  p1 = new Produto(null,"Cerveja", 11.00);
+		Produto  p2 = new Produto(null,"Suco", 10.00);
 		
-		Mesa mesa = new Mesa(null,1,4);
+		Mesa mesa = new Mesa(null,1,4,sdf.parse("14/02/2019 13:20"));
+		Mesa mesa1 = new Mesa(null,2,2,sdf.parse("14/02/2019 13:20"));
        
 		
 		
-		cat3.getProdutos().addAll((Arrays.asList(p1)));
+		cat3.getProdutos().addAll((Arrays.asList(p1,p2)));
 		p1.getCategorias().addAll(Arrays.asList(cat3));
+		p2.getCategorias().addAll(Arrays.asList(cat3));
 		
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3)); 
-		produtoRepository.save(p1);
+		produtoRepository.saveAll(Arrays.asList(p1,p2));
 		
-		Pedido ped1 = new Pedido(null,sdf.parse("08/02/2018 14:39"),mesa);
+		Pedido ped1 = new Pedido(null,sdf.parse("15/02/2019 13:20"),mesa);
 		
-		Pagamento pag = new Pagamento(null, EstadoPagamento.PAGO, ped1);
+		//Pagamento pag = new Pagamento(null, EstadoPagamento.PAGO, ped1);
 		
-		ped1.setPagamento(pag);
+		//ped1.setPagamento(pag);
 		
 		mesa.getPedidos().addAll(Arrays.asList(ped1));
 		
-		mesaRepository.save(mesa);
+		mesaRepository.saveAll(Arrays.asList(mesa,mesa1));
 		pedidoRepository.save(ped1);
-		pagamentoRepository.save(pag);
+		//pagamentoRepository.save(pag);
 		
-		ItemPedido ip1 = new  ItemPedido(ped1,p1,0.0,1, 2000.00);
+		ItemPedido ip1 = new  ItemPedido(ped1,p1,9, p1.getPreco());
+		ItemPedido ip2 = new  ItemPedido(ped1,p2,4,  p2.getPreco());
 		
 		
-		ped1.getItens().add(ip1);
-		p1.getItens().add(ip1);
-		itemPedidoRepository.save(ip1);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		//p1.getItens().add(ip1);
+		//p2.getItens().add(ip2);
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2));
 		
 		
 	}
