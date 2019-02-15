@@ -45,13 +45,29 @@ public class Pedido implements Serializable {
 
 	}
 
-	public double getValorTotal() {
-		double soma = 0.0;
+	public double getSubTotal() {
+		double soma = 0.0;		
 		for (ItemPedido ip : itens) {
-			soma = soma + ip.getSubTotal();
+			soma = soma + ip.getTotalPedido();
 		}
 		return soma;
 	}
+	
+	public double getValorTotal() {
+		double soma = 0.0;
+		soma = soma + getSubTotal()+getGarcon();
+		return soma;
+		
+	}
+	
+	public double getGarcon() {
+		 double percentual = 10.0 / 100.0; 
+		double soma = 0.0;
+		soma = soma + (getSubTotal()*percentual);
+		return soma;
+	}
+	
+	
 
 	public Mesa getMesa() {
 		return mesa;
