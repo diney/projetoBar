@@ -45,7 +45,7 @@ public class Pedido implements Serializable {
 
 	}
 
-	public double getSubTotal() {
+	/*public double getSubTotal() {
 		double soma = 0.0;		
 		for (ItemPedido ip : itens) {
 			soma = soma + ip.getTotalPedido();
@@ -66,7 +66,7 @@ public class Pedido implements Serializable {
 		soma = soma + (getSubTotal()*percentual);
 		return soma;
 	}
-	
+	*/
 	
 
 	public Mesa getMesa() {

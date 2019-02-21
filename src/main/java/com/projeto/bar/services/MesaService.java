@@ -26,8 +26,7 @@ public class MesaService {
 	@Autowired
 	private MesaRepository repo;
 	
-	@Autowired
-	private PedidoRepository pedidoRepository;
+	
 
 	public Mesa find(Integer id) {
 		Optional<Mesa> obj = repo.findById(id);
@@ -81,13 +80,13 @@ public class MesaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public List<Pedido> findByMesa(Integer id){
+	/*public List<Pedido> findByMesa(Integer id){
 		List<Pedido> pedidos = pedidoRepository.pedidosByMesa(id);
 		return  pedidos;
 		
 		
 	}
-	
+	*/
 		
 		
 	

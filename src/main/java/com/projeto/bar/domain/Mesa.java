@@ -41,6 +41,40 @@ public class Mesa  implements Serializable{
 		this.numeroPessoa = numeroPessoa;
 		this.instante = instante;
 	}
+	public List<ItemPedido> getPedidosMesa() {
+		List<ItemPedido> ip = new  ArrayList<>();	
+		for (Pedido ped : pedidos) {
+			for(ItemPedido ip1:ped.getItens()) {
+				ip.add(ip1);
+			}
+			
+			
+		}
+		return  ip;
+	}
+	
+	public double getSubTotal() {
+		double soma = 0.0;		
+		for (Pedido ped : pedidos) {
+			for(ItemPedido ip:ped.getItens())
+			soma = soma + ip.getTotalPedido();
+		}
+		return soma;
+	}
+	
+	public double getValorTotal() {
+		double soma = 0.0;
+		soma = soma + getSubTotal()+getGarcon();
+		return soma;
+		
+	}
+	
+	public double getGarcon() {
+		 double percentual = 10.0 / 100.0; 
+		double soma = 0.0;
+		soma = soma + (getSubTotal()*percentual);
+		return soma;
+	}
 
 
 	public Integer getId() {

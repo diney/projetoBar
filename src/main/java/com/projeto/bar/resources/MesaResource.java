@@ -64,10 +64,11 @@ public class MesaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value = "/mesa/{id}",method = RequestMethod.GET)
+	/*@RequestMapping(value = "/mesa/{id}",method = RequestMethod.GET)
 	public ResponseEntity<List<Pedido>> findByMesa(@PathVariable Integer id) {
+		
 		List<Pedido> list = service.findByMesa(id);
 		return ResponseEntity.ok().body(list);
 	}
-
+*/
 }
