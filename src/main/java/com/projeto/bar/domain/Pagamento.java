@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -11,7 +13,8 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projeto.bar.enums.EstadoPagamento;
 @Entity
-public class Pagamento implements Serializable{
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id	
@@ -20,18 +23,18 @@ public class Pagamento implements Serializable{
 	
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="pedido_id")
+	@JoinColumn(name="mesa_id")
 	@MapsId
-	private Pedido pedido;
+	private Mesa mesa;
 	
 	public Pagamento() {
 	}
 
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+	public Pagamento(Integer id, EstadoPagamento estado, Mesa mesa) {
 		super();
 		this.id = id;
 		this.estado = (estado == null)?null:estado.getCod();
-		this.pedido = pedido;
+		this.mesa = mesa;
 	}
 
 	public Integer getId() {
@@ -50,12 +53,12 @@ public class Pagamento implements Serializable{
 		this.estado = estado.getCod();
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public Mesa	 getMesa() {
+		return mesa;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setMesa(Mesa mesa) {
+		this.mesa = mesa;
 	}
 
 	@Override

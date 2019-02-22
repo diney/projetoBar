@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +29,9 @@ public class Mesa  implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="mesa")
 	private List<Pedido> pedidos = new ArrayList<>();
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="mesa")
+	private Pagamento pagamento;
 	
 	
 	public Mesa() {
@@ -124,6 +129,16 @@ public class Mesa  implements Serializable{
 
 	public void setInstante(Date instante) {
 		this.instante = instante;
+	}
+
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
 

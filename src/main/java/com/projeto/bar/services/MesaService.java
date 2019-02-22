@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -14,9 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.projeto.bar.domain.Mesa;
-import com.projeto.bar.domain.Pedido;
 import com.projeto.bar.repositories.MesaRepository;
-import com.projeto.bar.repositories.PedidoRepository;
 import com.projeto.bar.services.exceptions.DataIntegrityException;
 import com.projeto.bar.services.exceptions.ObjectNotFoundException;
 
