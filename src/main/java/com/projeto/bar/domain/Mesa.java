@@ -53,7 +53,7 @@ public class Mesa implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public List<ItemPedido> getPedidosMesa() {
+	/*public List<ItemPedido> getPedidosMesa() {
 		List<ItemPedido> ip = new ArrayList<>();
 		for (Pedido ped : pedidos) {
 			for (ItemPedido ip1 : ped.getItens()) {
@@ -62,7 +62,7 @@ public class Mesa implements Serializable {
 
 		}
 		return ip;
-	}
+	}*/
 
 	public double getSubTotal() {
 		double soma = 0.0;
