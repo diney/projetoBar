@@ -5,142 +5,143 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projeto.bar.enums.EstadoPagamento;
+
 @Entity
-public class Mesa  implements Serializable{
+public class Mesa implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer numero;
 	private Integer numeroPessoa;
-	@JsonFormat(pattern="dd/MM/yyyy HH:MM")
-	private Date instante ;
-	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:MM")
+	private Date instante;
+
 	@JsonIgnore
-	@OneToMany(mappedBy="mesa")
+	@OneToMany(mappedBy = "mesa")
 	private List<Pedido> pedidos = new ArrayList<>();
-	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="mesa")
-	private Pagamento pagamento;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+
+	private Integer estado;
+
 	public Mesa() {
-		
+
 	}
 
-
-	public Mesa(Integer id, Integer numero, Integer numeroPessoa,Date instante) {
+	public Mesa(Integer id, Integer numero, Integer numeroPessoa, EstadoPagamento estado, Date instante,
+			Usuario usuario) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.numeroPessoa = numeroPessoa;
 		this.instante = instante;
+		this.estado = (estado == null) ? null : estado.getCod();
+		this.usuario = usuario;
 	}
+
 	public List<ItemPedido> getPedidosMesa() {
-		List<ItemPedido> ip = new  ArrayList<>();	
+		List<ItemPedido> ip = new ArrayList<>();
 		for (Pedido ped : pedidos) {
-			for(ItemPedido ip1:ped.getItens()) {
+			for (ItemPedido ip1 : ped.getItens()) {
 				ip.add(ip1);
 			}
-			
-			
+
 		}
-		return  ip;
+		return ip;
 	}
-	
+
 	public double getSubTotal() {
-		double soma = 0.0;		
+		double soma = 0.0;
 		for (Pedido ped : pedidos) {
-			for(ItemPedido ip:ped.getItens())
-			soma = soma + ip.getTotalPedido();
+			for (ItemPedido ip : ped.getItens())
+				soma = soma + ip.getTotalPedido();
 		}
-		return soma;
-	}
-	
-	public double getValorTotal() {
-		double soma = 0.0;
-		soma = soma + getSubTotal()+getGarcon();
-		return soma;
-		
-	}
-	
-	public double getGarcon() {
-		 double percentual = 10.0 / 100.0; 
-		double soma = 0.0;
-		soma = soma + (getSubTotal()*percentual);
 		return soma;
 	}
 
+	public double getValorTotal() {
+		double soma = 0.0;
+		soma = soma + getSubTotal() + getGarcon();
+		return soma;
+
+	}
+
+	public double getGarcon() {
+		double percentual = 10.0 / 100.0;
+		double soma = 0.0;
+		soma = soma + (getSubTotal() * percentual);
+		return soma;
+	}
 
 	public Integer getId() {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public Integer getNumero() {
 		return numero;
 	}
 
-
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
-
 
 	public Integer getNumeroPessoa() {
 		return numeroPessoa;
 	}
 
-
 	public void setNumeroPessoa(Integer numeroPessoa) {
 		this.numeroPessoa = numeroPessoa;
 	}
-
 
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
 
-
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-
 
 	public Date getInstante() {
 		return instante;
 	}
 
-
 	public void setInstante(Date instante) {
 		this.instante = instante;
 	}
 
-
-	public Pagamento getPagamento() {
-		return pagamento;
+	public Integer getEstado() {
+		return estado;
 	}
 
-
-	public void setPagamento(Pagamento pagamento) {
-		this.pagamento = pagamento;
+	public void setEstado(Integer estado) {
+		this.estado = estado;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	@Override
 	public int hashCode() {
@@ -149,7 +150,6 @@ public class Mesa  implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -167,12 +167,5 @@ public class Mesa  implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }

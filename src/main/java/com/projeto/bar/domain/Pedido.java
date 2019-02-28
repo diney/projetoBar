@@ -26,6 +26,10 @@ public class Pedido implements Serializable {
 
 	// @OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	// private Pagamento pagamento;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 
 	@ManyToOne
 	@JoinColumn(name = "mesa_id")
@@ -37,36 +41,15 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
-	public Pedido(Integer id, Date instante, Mesa mesa) {
+	public Pedido(Integer id, Date instante, Mesa mesa,Usuario usuario) {
 		super();
 		this.id = id;
 		this.instante = instante;
 		this.mesa = mesa;
+		this.usuario = usuario;
 
 	}
 
-	/*public double getSubTotal() {
-		double soma = 0.0;		
-		for (ItemPedido ip : itens) {
-			soma = soma + ip.getTotalPedido();
-		}
-		return soma;
-	}
-	
-	public double getValorTotal() {
-		double soma = 0.0;
-		soma = soma + getSubTotal()+getGarcon();
-		return soma;
-		
-	}
-	
-	public double getGarcon() {
-		 double percentual = 10.0 / 100.0; 
-		double soma = 0.0;
-		soma = soma + (getSubTotal()*percentual);
-		return soma;
-	}
-	*/
 	
 
 	public Mesa getMesa() {
@@ -103,6 +86,14 @@ public class Pedido implements Serializable {
 
 	public Set<ItemPedido> getItens() {
 		return itens;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public void setItens(Set<ItemPedido> itens) {

@@ -1,4 +1,4 @@
-package com.projetoBar.config;
+package com.projeto.bar.config;
 
 import java.text.ParseException;
 
